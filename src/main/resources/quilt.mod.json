@@ -8,7 +8,8 @@
 			"name": "Ocean Depths",
 			"description": "A chronite core series mod",
 			"contributors": {
-				"W3xyz": "Owner"
+				"W3xyz": "Owner",
+				"LordYvain": "Texture Artist"
 			},
 			"contact": {
 				"homepage": "https://example.com/",
@@ -38,10 +39,6 @@
 			{
 				"id": "chronitecore",
 				"versions": ">=0.1-1.20.1"
-			},
-			{
-				"id": "geckolib",
-				"versions": ">=4.2.2"
 			}
 		]
 	},

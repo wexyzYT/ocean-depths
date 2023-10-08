@@ -11,11 +11,11 @@ version = "$project.version+${libs.versions.minecraft.get()}"
 group = project.maven_group
 
 repositories {
-
 	maven {
 		name = 'GeckoLib'
 		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
 	}
+
 }
 
 // All the dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"
@@ -30,8 +30,9 @@ dependencies {
 		officialMojangMappings()
 	}
 	*/
-	modImplementation libs.quilt.loader
+
 	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.2.2'
+	modImplementation libs.quilt.loader
 	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
 	// Quilted Fabric API will automatically pull in the correct QSL version.
 	modImplementation libs.quilted.fabric.api
