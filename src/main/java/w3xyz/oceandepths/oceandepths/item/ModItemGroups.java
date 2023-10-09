@@ -12,8 +12,8 @@ import w3xyz.oceandepths.oceandepths.block.ModBlocks;
 
 public class ModItemGroups {
 	public static final ItemGroup RUBY_GROUP = Registry.register(Registries.ITEM_GROUP,
-			new Identifier(OceanDepths.MOD_ID, "ruby"),
-			FabricItemGroup.builder().name(Text.translatable("itemgroup.ruby"))
+			new Identifier(OceanDepths.MOD_ID, "ocean"),
+			FabricItemGroup.builder().name(Text.translatable("itemgroup.ocean"))
 					.icon(() -> new ItemStack(ModItems.ANCIENT_BLUEPRINTS)).entries((displayContext, entries) -> {
 						entries.addItem(ModItems.ANCIENT_BLUEPRINTS);
 						entries.addItem(ModItems.RADAR);

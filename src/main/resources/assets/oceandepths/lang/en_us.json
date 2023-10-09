@@ -1,3 +1,5 @@
 {
-  "item.oceandepths.radar": "Sculk Radar"
+  "item.oceandepths.radar": "Sculk Radar",
+  "itemgroup.ocean": "Ocean Depths",
+  "item.oceandepths.bonkfish_spawn_egg": "Bonkfish Spawn Egg"
 }

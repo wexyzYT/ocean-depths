@@ -13,8 +13,9 @@ public class BonkfishModel extends GeoModel<BonkfishEntity> {
 	}
 
 	@Override
-	public Identifier getTextureResource(BonkfishEntity animatable) {
-		return new Identifier(OceanDepths.MOD_ID, "textures/entity/bonkfish.png");
+	public Identifier getTextureResource(BonkfishEntity entity) {
+		int variant = entity.getVariant();
+		return new Identifier(OceanDepths.MOD_ID, "textures/entity/bonkfish/bonkfish_" + variant + ".png");
 	}
 
 	@Override

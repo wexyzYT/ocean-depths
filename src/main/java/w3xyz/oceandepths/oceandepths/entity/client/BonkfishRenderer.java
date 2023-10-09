@@ -1,6 +1,7 @@
 package w3xyz.oceandepths.oceandepths.entity.client;
 
 
+import net.minecraft.entity.Entity;
 
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -15,10 +16,16 @@ public class BonkfishRenderer extends GeoEntityRenderer<BonkfishEntity> {
 		super(renderManager, new BonkfishModel());
 	}
 
+
+
+
 	@Override
-	public Identifier getTextureLocation(BonkfishEntity animatable) {
-		return new Identifier(OceanDepths.MOD_ID, "textures/entity/bonkfish.png");
+	public Identifier getTextureLocation(BonkfishEntity entity) {
+
+		int variant = entity.getVariant();
+		return new Identifier(OceanDepths.MOD_ID, "textures/entity/bonkfish/bonkfish_" + variant + ".png");
 	}
+
 
 
 	@Override

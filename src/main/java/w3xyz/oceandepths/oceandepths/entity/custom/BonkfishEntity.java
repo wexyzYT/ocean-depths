@@ -1,6 +1,6 @@
 package w3xyz.oceandepths.oceandepths.entity.custom;
 
-
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
@@ -10,12 +10,10 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.DolphinEntity;
-import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
@@ -26,13 +24,17 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
-
 public class BonkfishEntity extends SchoolingFishEntity implements GeoEntity {
 	public AnimatableInstanceCache cashe = new SingletonAnimatableInstanceCache(this);
+	public int variant;  // Added this line
+
 	public BonkfishEntity(EntityType<? extends SchoolingFishEntity> entityType, World world) {
 		super(entityType, world);
+		this.variant = this.random.nextInt(4);  // Randomly choose one of 4 variants
 	}
-
+	public int getVariant() {
+		return this.variant;
+	}
 	public static DefaultAttributeContainer.Builder setAttributes() {
 		return SchoolingFishEntity.createAttributes()
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, 10D)
@@ -58,14 +60,17 @@ public class BonkfishEntity extends SchoolingFishEntity implements GeoEntity {
 	protected SoundEvent getFlopSound() {
 		return SoundEvents.ENTITY_COD_FLOP;
 	}
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return SoundEvents.ENTITY_COD_HURT;
 	}
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundEvents.ENTITY_COD_AMBIENT;
 	}
+
 	@Override
 	public ItemStack getBucketItem() {
 		return null;
@@ -73,18 +78,25 @@ public class BonkfishEntity extends SchoolingFishEntity implements GeoEntity {
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+		controllers.add(new AnimationController<>(this, "controller", 0, this::predicate)
+				.triggerableAnim("attack", RawAnimation.begin().then("animation.bonkfish.attack", Animation.LoopType.PLAY_ONCE)));
+	}
+
+	@Override
+	public boolean tryAttack(Entity target) {
+		this.triggerAnim("controller", "attack");
+		return super.tryAttack(target);
 	}
 
 	private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
 		if(tAnimationState.isMoving()){
 			tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.bonkfish.swim", Animation.LoopType.LOOP));
+			return PlayState.CONTINUE; // Added this line to return PlayState.CONTINUE when the entity is moving.
 		}
+
 		tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.bonkfish.swim", Animation.LoopType.LOOP));
 
-
-
-		return PlayState.CONTINUE;
+		return PlayState.CONTINUE; // Moved this line outside the if statement to ensure it always returns a PlayState.
 	}
 
 	@Override
